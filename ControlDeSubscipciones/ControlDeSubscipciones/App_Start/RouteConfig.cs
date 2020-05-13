@@ -4,7 +4,7 @@ using System.Web;
 using System.Web.Routing;
 using Microsoft.AspNet.FriendlyUrls;
 
-namespace ControlDeSubscipciones
+namespace ControlDesuscipciones
 {
     public static class RouteConfig
     {

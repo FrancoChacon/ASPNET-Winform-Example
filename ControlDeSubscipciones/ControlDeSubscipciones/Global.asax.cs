@@ -7,7 +7,7 @@ using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
 
-namespace ControlDeSubscipciones
+namespace ControlDesuscipciones
 {
     public class Global : HttpApplication
     {

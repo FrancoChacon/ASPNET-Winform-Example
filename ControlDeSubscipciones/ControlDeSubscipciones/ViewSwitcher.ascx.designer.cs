@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ControlDeSubscipciones {
+namespace ControlDesuscipciones {
     
     
     public partial class ViewSwitcher {
