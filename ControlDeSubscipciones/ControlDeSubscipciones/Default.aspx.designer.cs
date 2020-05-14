@@ -33,22 +33,22 @@ namespace ControlDesuscipciones
         protected global::System.Web.UI.WebControls.TextBox ASPNumeroDeDocumento;
 
         /// <summary>
-        /// ModificarButton control.
+        /// ASPNuevoButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ModificarButton;
+        protected global::System.Web.UI.WebControls.Button ASPNuevoButton;
 
         /// <summary>
-        /// NuevoButton control.
+        /// ASPUserDataContent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button NuevoButton;
+        protected global::System.Web.UI.WebControls.Panel ASPUserDataContent;
 
         /// <summary>
         /// ASPMainUserLabel control.
@@ -58,6 +58,15 @@ namespace ControlDesuscipciones
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label ASPMainUserLabel;
+
+        /// <summary>
+        /// ASPModificarButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ASPModificarButton;
 
         /// <summary>
         /// ASPNombre control.

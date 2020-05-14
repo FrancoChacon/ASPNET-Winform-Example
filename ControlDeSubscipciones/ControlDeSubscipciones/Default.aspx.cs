@@ -26,6 +26,7 @@ namespace ControlDesuscipciones
             {
                 InstanciaDB = new DbInstance();
                 CleanFrames();
+                ASPUserDataContent.Visible = false;
                 //Code when initial loading 
             }
             else
@@ -38,55 +39,143 @@ namespace ControlDesuscipciones
 
 
 
-
-
-
-
         #region Frames
-
-        public void FrameDarDeAlta()
-        {
-            ActualFrame = Frames.UserRegister;
-            CleanFrames();
-            ASPMainUserLabel.Text = "Registre un nuevo Suscriptor";
-            ReadOnlyFrame(false);
-        }
-
-
-
-
-        public void FrameRegistrar()
-        {
-            ActualFrame = Frames.UserRegister;
-            CleanFrames();
-            ASPMainUserLabel.Text = "El suscriptor no existe , registre un nuevo Suscriptor";
-            ReadOnlyFrame(false);
-        }
-
-        public void FrameUserFound(Suscriptor User)
-        {
-            ActualFrame = Frames.SuscriptionRegister;
-
-            CleanFrames();
-            ASPMainUserLabel.Text = "Datos del Usuario";
-            ReadOnlyFrame(true);
-            DisplayUser(User);
-            DataSuscriptionPANEL.Visible = true;
-            ASPFechaActual.Text = DateTime.Now.Date.ToString();
-            ASPFechaFin.Text = DateTime.Now.AddMonths(1).Date.ToString();
-            SuscriptorSelecionado = User;
-
-
-        }
 
         public enum Frames
         {
-            UserRegister,
-            SuscriptionRegister,
+            RegisterSuscripcion,
+            SearchUser,
+            RegisterNewUser,
+            UserModify,
         }
 
 
         public static Frames ActualFrame;
+
+
+
+
+        public void FrameUserFoundSearch(Suscriptor User)
+        {
+            ASPModificarButton.Visible = true;
+            ASPUserDataContent.Visible = true;
+            ActualFrame = Frames.SearchUser;
+            SuscriptorSelecionado = User;
+            CleanFrames();
+            ASPMainUserLabel.Text = "Datos del Usuario";
+            ReadOnlyFrame(true);
+            DisplayUser(User);
+
+
+
+        }
+
+
+        public void RegisterSearch()
+        {
+            ActualFrame = Frames.RegisterSuscripcion;
+            var IDDocument = ASPNumeroDeDocumento.Text;
+            var TipoDocumento = ASPTipoDeDocumento.Text;
+
+            var Suscriptores = InstanciaDB.GetAll<Suscriptor>();
+            var MatchSub = Suscriptores.Where(x => x.TipoDocumento == TipoDocumento && x.NumeroDocumento == IDDocument).SingleOrDefault();
+
+
+            if (MatchSub == null)
+            {
+                ASPUserDataContent.Visible = true;
+                CleanFrames();
+                ASPMainUserLabel.Text = "El suscriptor no existe , registre un nuevo Suscriptor";
+                ReadOnlyFrame(false);
+                return;
+            }
+            else
+            {
+
+                var Suscripciones = InstanciaDB.GetAll<Suscripcion>();
+
+                var Suscripcion = Suscripciones.Where(x => x.IdSuscriptor == MatchSub.IdSuscriptor).SingleOrDefault();
+
+                if (Suscripcion == null)
+                {
+                    ASPUserDataContent.Visible = true;
+
+
+                    CleanFrames();
+                    ASPMainUserLabel.Text = "Datos del Usuario";
+                    ReadOnlyFrame(true);
+                    DisplayUser(MatchSub);
+                    ASPModificarButton.Visible = true;
+                    DataSuscriptionPANEL.Visible = true;
+                    ASPFechaActual.Text = DateTime.Now.Date.ToString();
+                    ASPFechaFin.Text = DateTime.Now.AddMonths(1).Date.ToString();
+                    SuscriptorSelecionado = MatchSub;
+                }
+                else
+                {
+                    Alert("Este Usuario ya tiene una suscripcion");
+                    CloseFrames();
+                }
+
+
+
+            }
+        }
+
+
+
+        public void FrameDarDeAlta()
+        {
+
+            var IDDocument = ASPNumeroDeDocumento.Text;
+            var TipoDocumento = ASPTipoDeDocumento.Text;
+
+            var Suscriptores = InstanciaDB.GetAll<Suscriptor>();
+            var MatchSub = Suscriptores.Where(x => x.TipoDocumento == TipoDocumento && x.NumeroDocumento == IDDocument).SingleOrDefault();
+
+            if (MatchSub == null)
+            {
+                ASPModificarButton.Visible = false;
+                ASPUserDataContent.Visible = true;
+                ActualFrame = Frames.RegisterNewUser;
+                CleanFrames();
+                ASPMainUserLabel.Text = "Registre un nuevo Suscriptor";
+                ReadOnlyFrame(false);
+            }
+            else
+            {
+                Alert("Ya existe este suscriptor");
+                CleanFrames();
+            }
+
+
+    
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public void ModificarUsuario()
+        {
+            ASPUserDataContent.Visible = true;
+            ActualFrame = Frames.UserModify;
+          
+            ASPMainUserLabel.Text = "Modifique los datos de interes";
+            ReadOnlyFrame(false);
+        }
+
+
+
+
 
 
         public void ReadOnlyFrame(bool ReadOnly)
@@ -118,6 +207,7 @@ namespace ControlDesuscipciones
             ASPDireccion.Text = "";
 
         }
+
         public void DisplayUser(Suscriptor User)
         {
 
@@ -148,54 +238,6 @@ namespace ControlDesuscipciones
 
         }
 
-
-        public void Search()
-        {
-            var IDDocument = ASPNumeroDeDocumento.Text;
-            var TipoDocumento = ASPTipoDeDocumento.Text;
-
-
-
-            var Suscriptores = InstanciaDB.GetAll<Suscriptor>();
-
-
-            var MatchSub = Suscriptores.Where(x => x.TipoDocumento == TipoDocumento && x.NumeroDocumento == IDDocument).SingleOrDefault();
-
-
-            if (MatchSub == null)
-            {
-                // Alert("No existe el suscriptor");
-                FrameRegistrar();
-                return;
-            }
-            else
-            {
-
-                var Suscripciones = InstanciaDB.GetAll<Suscripcion>();
-
-                var Suscripcion = Suscripciones.Where(x => x.IdSuscriptor == MatchSub.IdSuscriptor).SingleOrDefault();
-
-                if(Suscripcion == null)
-                {
-                    FrameUserFound(MatchSub);
-                }
-                else
-                {
-                    Alert("Este Usuario ya tiene una suscripcion");
-                }
-
-
-               
-            }
-
-
-
-
-
-
-            // var Suscripciones = InstanciaDB.database.GetAll<Suscripcion>();
-
-        }
 
 
         public static Suscriptor SuscriptorSelecionado;
@@ -240,37 +282,82 @@ namespace ControlDesuscipciones
 
         }
 
-        protected void SearchButton_Click(object sender, EventArgs e)
-        {
-            Search();
-        }
+
 
         protected void ModificarButton_Click(object sender, EventArgs e)
         {
+
+
+            ModificarUsuario();
+
 
         }
 
         protected void NuevoButton_Click(object sender, EventArgs e)
         {
+            FrameDarDeAlta();
+        }
+
+
+
+        protected void SearchButton_Click(object sender, EventArgs e)
+        {
+            RegisterSearch();
+        }
+
+
+
+        public void CloseFrames()
+        {
+            CleanFrames();
+            ASPUserDataContent.Visible = false;
+
+            DataSuscriptionPANEL.Visible = false;
+
+            ASPUserDataContent.Visible = false;
+
+            ASPModificarButton.Visible = false;
+
 
         }
+
+
+        protected void SearchButton2_Click(object sender, EventArgs e)
+        {
+            var IDDocument = ASPNumeroDeDocumento.Text;
+            var TipoDocumento = ASPTipoDeDocumento.Text;
+
+            var Suscriptores = InstanciaDB.GetAll<Suscriptor>();
+            var MatchSub = Suscriptores.Where(x => x.TipoDocumento == TipoDocumento && x.NumeroDocumento == IDDocument).SingleOrDefault();
+
+
+            if (MatchSub != null)
+            {
+                FrameUserFoundSearch(MatchSub);
+            }
+            else
+            {
+                Alert("No existe el suscriptor");
+                CloseFrames();
+            }
+
+
+
+        }
+
 
         protected void AcceptarButton_Click(object sender, EventArgs e)
         {
 
             switch (ActualFrame)
             {
-                case Frames.UserRegister:
+                case Frames.RegisterNewUser:
 
                     bool Inserted = RegisterNewSuscriptor();
 
-                    if (Inserted)
-                    {
-                        Alert("Insert Success");
-                    }
 
                     break;
-                case Frames.SuscriptionRegister:
+                case Frames.RegisterSuscripcion:
 
                     Suscripcion Sc = new Suscripcion();
 
@@ -284,19 +371,40 @@ namespace ControlDesuscipciones
                     Sc.Motivo = "";
 
                     InstanciaDB.Insert<Suscripcion>(Sc);
+                    break;
+
+
+                case Frames.SearchUser:
+
 
 
 
                     break;
+                case Frames.UserModify:
+
+             
+           
+                    SuscriptorSelecionado.Apellido = ASPApellido.Text;
+                    SuscriptorSelecionado.Nombre = ASPNombre.Text;
+                    SuscriptorSelecionado.Email = ASPEmail.Text;
+                    SuscriptorSelecionado.Direccion = ASPDireccion.Text;
+                    SuscriptorSelecionado.Telefono = ASPTelefono.Text;
+                    SuscriptorSelecionado.NombreUsuario = ASPUsuario.Text;
+                    SuscriptorSelecionado.Password = ASPContraseña.Text;
+
+                    InstanciaDB.Update(SuscriptorSelecionado);
+
+
+
+                    break;
+
                 default:
                     break;
             }
 
 
 
-            SuscriptorSelecionado = null;
-            CleanFrames();
-
+            CloseFrames();
         }
 
 
@@ -305,6 +413,10 @@ namespace ControlDesuscipciones
 
         #endregion
 
-
+        protected void CancelarButton_Click(object sender, EventArgs e)
+        {
+       
+            CloseFrames();
+        }
     }
 }

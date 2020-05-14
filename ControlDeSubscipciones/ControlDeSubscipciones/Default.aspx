@@ -32,93 +32,103 @@
             <div style="text-align: center; height: 96px; overflow: hidden">
 
                 <asp:Button Style="margin: 10px;"
-                    runat="server" Text="Buscar suscriptor" Width="221px" Height="46px" OnClick="SearchButton_Click" />
+                    runat="server" Text="Registrar Suscripcion" Width="221px" Height="46px" OnClick="SearchButton_Click" />
 
-                <asp:Button Style="margin: 10px;" ID="ModificarButton"
-                    runat="server" Text="Modificar" Width="221px" Height="46px" OnClick="ModificarButton_Click" />
-                <asp:Button Style="margin: 10px;" ID="NuevoButton"
+                <asp:Button Style="margin: 10px;"
+                    runat="server" Text="Buscar Suscriptor" Width="221px" Height="46px" OnClick="SearchButton2_Click" />
+                <asp:Button Style="margin: 10px;" ID="ASPNuevoButton"
                     runat="server" Text="Nuevo suscriptor" Width="221px" Height="46px" OnClick="NuevoButton_Click" />
-
             </div>
         </div>
+
+
+
 
         <div style="width: 50%; margin: 20px auto; text-align: center;">
+            <asp:Panel ID="ASPUserDataContent" runat="server">
+                <asp:Label ID="ASPMainUserLabel" runat="server"></asp:Label>
+                <div>
+                    <asp:Button Style="margin: 10px;" ID="ASPModificarButton"
+                        runat="server" Text="Modificar" Width="221px" Height="46px" OnClick="ModificarButton_Click" />
 
-
-            <asp:Label ID="ASPMainUserLabel" runat="server"></asp:Label>
-            <div id="DIVMainContent" style="text-align: center; height: 96px; overflow: hidden" class="row">
-                <div class="column">
-                    <b>Nombre</b>
-                    <asp:TextBox ID="ASPNombre" runat="server" Width="326px"></asp:TextBox>
-                </div>
-                <div class="column">
-                    <b>Apellido</b>
-                    <asp:TextBox ID="ASPApellido" runat="server" Width="326px"></asp:TextBox>
-                </div>
-
-            </div>
-
-
-            <div style="text-align: center; height: 96px; overflow: hidden" class="row">
-                <div class="column">
-                    <b>Direccion</b>
-                    <asp:TextBox ID="ASPDireccion" runat="server" Width="326px"></asp:TextBox>
-                </div>
-                <div class="column">
-                    <b>Email</b>
-                    <asp:TextBox ID="ASPEmail" runat="server" Width="326px"></asp:TextBox>
-                </div>
-
-            </div>
-
-            <div style="text-align: center; height: 96px; overflow: hidden" class="row">
-                <div class="column">
-                    <b>Telefono</b>
-                    <asp:TextBox ID="ASPTelefono" runat="server" Width="326px"></asp:TextBox>
                 </div>
 
 
-            </div>
+                <div id="DIVMainContent" style="text-align: center; height: 96px; overflow: hidden" class="row">
+                    <div class="column">
+                        <b>Nombre</b>
+                        <asp:TextBox ID="ASPNombre" runat="server" Width="326px"></asp:TextBox>
+                    </div>
+                    <div class="column">
+                        <b>Apellido</b>
+                        <asp:TextBox ID="ASPApellido" runat="server" Width="326px"></asp:TextBox>
+                    </div>
 
-
-            <div style="text-align: center; height: 96px; overflow: hidden" class="row">
-                <div class="column">
-                    <b>Usuario</b>
-                    <asp:TextBox ID="ASPUsuario" runat="server" Width="326px"></asp:TextBox>
                 </div>
-                <div class="column">
-                    <b>Contraseña</b>
-                    <asp:TextBox ID="ASPContraseña" TextMode="Password" runat="server" Width="326px"></asp:TextBox>
+
+
+                <div style="text-align: center; height: 96px; overflow: hidden" class="row">
+                    <div class="column">
+                        <b>Direccion</b>
+                        <asp:TextBox ID="ASPDireccion" runat="server" Width="326px"></asp:TextBox>
+                    </div>
+                    <div class="column">
+                        <b>Email</b>
+                        <asp:TextBox ID="ASPEmail" runat="server" Width="326px"></asp:TextBox>
+                    </div>
+
                 </div>
 
-            </div>
+                <div style="text-align: center; height: 96px; overflow: hidden" class="row">
+                    <div class="column">
+                        <b>Telefono</b>
+                        <asp:TextBox ID="ASPTelefono" runat="server" Width="326px"></asp:TextBox>
+                    </div>
 
 
-        </div>
+                </div>
 
-        <div style="text-align: center">
-            <asp:Panel runat="server" ID="DataSuscriptionPANEL">
 
-                <p>Verifique la nueva suscripcion</p>
+                <div style="text-align: center; height: 96px; overflow: hidden" class="row">
+                    <div class="column">
+                        <b>Usuario</b>
+                        <asp:TextBox ID="ASPUsuario" runat="server" Width="326px"></asp:TextBox>
+                    </div>
+                    <div class="column">
+                        <b>Contraseña</b>
+                        <asp:TextBox ID="ASPContraseña" TextMode="Password" runat="server" Width="326px"></asp:TextBox>
+                    </div>
 
-                <b>Fecha de Alta</b>
-                <asp:TextBox ID="ASPFechaActual" runat="server" Width="326px"></asp:TextBox>
+                </div>
 
-                <b style="margin: 0 0 0 0">Fecha de Finalizacion</b>
-                <asp:TextBox ID="ASPFechaFin" runat="server" Width="326px"></asp:TextBox>
+                <div style="text-align: center">
+                    <asp:Panel runat="server" ID="DataSuscriptionPANEL">
+
+                        <p>Verifique la nueva suscripcion</p>
+
+                        <b>Fecha de Alta</b>
+                        <asp:TextBox ID="ASPFechaActual" runat="server" Width="326px"></asp:TextBox>
+
+                        <b style="margin: 0 0 0 0">Fecha de Finalizacion</b>
+                        <asp:TextBox ID="ASPFechaFin" runat="server" Width="326px"></asp:TextBox>
+
+                    </asp:Panel>
+                </div>
+
+                <div id="DIVRegistrarUsuario" style="text-align: center; height: 96px; overflow: hidden">
+
+                    <asp:Button Style="margin: 10px;" ID="AcceptarButton"
+                        runat="server" Text="Aceptar" Width="221px" Height="46px" OnClick="AcceptarButton_Click" />
+                    <asp:Button Style="margin: 10px;" ID="CancelarButton"
+                        runat="server" Text="Cancelar" Width="221px" Height="46px" OnClick="CancelarButton_Click" />
+
+                </div>
+
+
+
 
             </asp:Panel>
         </div>
-
-        <div id="DIVRegistrarUsuario" style="text-align: center; height: 96px; overflow: hidden">
-
-            <asp:Button Style="margin: 10px;" ID="AcceptarButton"
-                runat="server" Text="Aceptar" Width="221px" Height="46px" OnClick="AcceptarButton_Click" />
-            <asp:Button Style="margin: 10px;" ID="CancelarButton"
-                runat="server" Text="Cancelar" Width="221px" Height="46px" />
-
-        </div>
-
 
 
     </div>
