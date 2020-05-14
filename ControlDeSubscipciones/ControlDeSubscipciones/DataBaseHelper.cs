@@ -7,7 +7,7 @@ using System.Web;
 
 namespace ControlDeSubscipciones
 {
-    [Table("dbo.Suscriptor")]
+    [Table("dbo.suscriptor")]
     public class Suscriptor
     {
         [ExplicitKey]
@@ -28,7 +28,7 @@ namespace ControlDeSubscipciones
 
 
 
-    [Table("dbo.Suscripcion")]
+    [Table("dbo.suscripcion")]
     public class Suscripcion
     {
         [ExplicitKey]
