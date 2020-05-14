@@ -17,7 +17,16 @@ namespace ControlDesuscipciones
     public partial class _Default : Page
     {
 
+        #region Propiedades
+
+
+        public static Suscriptor SuscriptorSelecionado;
+        public static string EncryptionPass = "EstaClaveEsUsadaParaEncriptar";
         public static DbInstance InstanciaDB;
+
+
+        #endregion
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -31,6 +40,7 @@ namespace ControlDesuscipciones
             }
             else
             {
+                ASPContraseña.Attributes["type"] = "password";
                 // code when post back 
             }
 
@@ -71,7 +81,7 @@ namespace ControlDesuscipciones
         }
 
 
-        public void RegisterSearch()
+        public void FrameRegisterSearch()
         {
             ActualFrame = Frames.RegisterSuscripcion;
             var IDDocument = ASPNumeroDeDocumento.Text;
@@ -149,35 +159,26 @@ namespace ControlDesuscipciones
             }
 
 
-    
+
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-        public void ModificarUsuario()
+        public void FrameModificarUsuario()
         {
             ASPUserDataContent.Visible = true;
             ActualFrame = Frames.UserModify;
-          
+
             ASPMainUserLabel.Text = "Modifique los datos de interes";
             ReadOnlyFrame(false);
         }
 
 
 
+        #endregion
 
 
 
+        #region Methods
         public void ReadOnlyFrame(bool ReadOnly)
         {
             ASPApellido.ReadOnly = ReadOnly;
@@ -188,9 +189,6 @@ namespace ControlDesuscipciones
             ASPContraseña.ReadOnly = ReadOnly;
 
         }
-
-
-
 
         public void CleanFrames()
         {
@@ -217,19 +215,11 @@ namespace ControlDesuscipciones
             ASPEmail.Text = User.Email;
             ASPTelefono.Text = User.Telefono;
             ASPUsuario.Text = User.NombreUsuario;
-            ASPContraseña.Text = User.Password;
             ASPDireccion.Text = User.Direccion;
+            ASPContraseña.Text = Encryptor.Decrypt(User.Password, EncryptionPass);
 
 
         }
-
-
-
-        #endregion
-
-
-
-        #region Methods
 
 
         public void Alert(String Message)
@@ -240,7 +230,6 @@ namespace ControlDesuscipciones
 
 
 
-        public static Suscriptor SuscriptorSelecionado;
 
         public bool RegisterNewSuscriptor()
         {
@@ -253,7 +242,12 @@ namespace ControlDesuscipciones
             NewUser.Direccion = ASPDireccion.Text;
             NewUser.Telefono = ASPTelefono.Text;
             NewUser.NombreUsuario = ASPUsuario.Text;
-            NewUser.Password = ASPContraseña.Text;
+
+
+
+            NewUser.Password = Encryptor.Encrypt(ASPContraseña.Text, EncryptionPass);
+
+    
 
             NewUser.TipoDocumento = ASPTipoDeDocumento.Text;
             NewUser.NumeroDocumento = ASPNumeroDeDocumento.Text;
@@ -288,7 +282,7 @@ namespace ControlDesuscipciones
         {
 
 
-            ModificarUsuario();
+            FrameModificarUsuario();
 
 
         }
@@ -302,7 +296,7 @@ namespace ControlDesuscipciones
 
         protected void SearchButton_Click(object sender, EventArgs e)
         {
-            RegisterSearch();
+            FrameRegisterSearch();
         }
 
 
@@ -382,15 +376,17 @@ namespace ControlDesuscipciones
                     break;
                 case Frames.UserModify:
 
-             
-           
+
+
                     SuscriptorSelecionado.Apellido = ASPApellido.Text;
                     SuscriptorSelecionado.Nombre = ASPNombre.Text;
                     SuscriptorSelecionado.Email = ASPEmail.Text;
                     SuscriptorSelecionado.Direccion = ASPDireccion.Text;
                     SuscriptorSelecionado.Telefono = ASPTelefono.Text;
                     SuscriptorSelecionado.NombreUsuario = ASPUsuario.Text;
-                    SuscriptorSelecionado.Password = ASPContraseña.Text;
+
+                    
+                    SuscriptorSelecionado.Password = Encryptor.Encrypt(ASPContraseña.Text, EncryptionPass);
 
                     InstanciaDB.Update(SuscriptorSelecionado);
 
@@ -415,7 +411,7 @@ namespace ControlDesuscipciones
 
         protected void CancelarButton_Click(object sender, EventArgs e)
         {
-       
+
             CloseFrames();
         }
     }

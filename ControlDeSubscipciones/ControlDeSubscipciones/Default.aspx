@@ -96,21 +96,21 @@
                     </div>
                     <div class="column">
                         <b>Contraseña</b>
-                        <asp:TextBox ID="ASPContraseña" TextMode="Password" runat="server" Width="326px"></asp:TextBox>
+                        <asp:TextBox ID="ASPContraseña" runat="server" Width="326px"></asp:TextBox>
                     </div>
 
                 </div>
 
                 <div style="text-align: center">
                     <asp:Panel runat="server" ID="DataSuscriptionPANEL">
+                        <div>
+                            <p>Verifique la nueva suscripcion</p>
+                            <p><b style="margin: 0 0 0 0">Fecha de Alta</b></p>
+                            <asp:TextBox ID="ASPFechaActual" runat="server" Width="326px"></asp:TextBox>
+                            <p><b style="margin: 0 0 0 0">Fecha de Finalizacion</b></p>
+                            <asp:TextBox ID="ASPFechaFin" runat="server" Width="326px"></asp:TextBox>
 
-                        <p>Verifique la nueva suscripcion</p>
-
-                        <b>Fecha de Alta</b>
-                        <asp:TextBox ID="ASPFechaActual" runat="server" Width="326px"></asp:TextBox>
-
-                        <b style="margin: 0 0 0 0">Fecha de Finalizacion</b>
-                        <asp:TextBox ID="ASPFechaFin" runat="server" Width="326px"></asp:TextBox>
+                        </div>
 
                     </asp:Panel>
                 </div>
